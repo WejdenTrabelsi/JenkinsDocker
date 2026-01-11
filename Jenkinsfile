@@ -39,10 +39,7 @@ pipeline {
                 }
             }
         }
-        post {
-            success { echo 'yeehaw' }
-            failure { echo 'should i call u a waambliance' }
-        }
+        
 
 
 
@@ -52,6 +49,10 @@ pipeline {
 
 
     }
+    post {
+            success { echo 'yeehaw' }
+            failure { echo 'should i call u a waambliance' }
+        }
 
 
 
