@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        node {
+        any{
             customWorkspace 'D:\\Jenkins\\workspace\\dockerjenkins2'
         }
     }
