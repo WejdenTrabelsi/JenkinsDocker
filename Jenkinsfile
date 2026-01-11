@@ -25,7 +25,7 @@ pipeline {
             steps {
                 bat '''
                 docker rm -f myapp_test 2>nul || ver > nul
-                docker run -d --name myapp_test -p 8081:80 %IMAGE%:%TAG%
+                docker run -d --name myapp_test -p 8082:80 %IMAGE%:%TAG%
                 ping -n 3 12.0.0.1 >nul
                 curl -I http://localhost:8082 |find "200 OK"
                 docker rm -f myapp_test
