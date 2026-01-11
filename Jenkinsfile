@@ -1,10 +1,10 @@
 pipeline {
-     agent {
-        any {
-            
+    agent {
+        node {
             customWorkspace 'D:\\Jenkins\\workspace\\dockerjenkins2'
         }
     }
+
     environment {
         IMAGE = 'wejdentrabelsi9/dockerjenkins2'
         TAG = "build-${env.BUILD_NUMBER}"
@@ -24,14 +24,15 @@ pipeline {
         stage('smoke test') {
             steps {
                 bat '''
-                docker rm -f myapp_test 2>nul || ver > nul
+                docker rm -f myapp_test 2>nul || ver >nul
                 docker run -d --name myapp_test -p 8082:80 %IMAGE%:%TAG%
-                ping -n 3 12.0.0.1 >nul
-                curl -I http://localhost:8082 |find "200 OK"
+                ping -n 3 localhost >nul
+                curl -f http://localhost:8082 || exit /b 1
                 docker rm -f myapp_test
                 '''
             }
         }
+
         stage('push sur dockerhub') {
             steps {
                 withCredentials([usernamePassword(credentialsId:'docker-id', usernameVariable:'USER', passwordVariable:'PASS')]) {
@@ -42,6 +43,18 @@ pipeline {
                     docker push %IMAGE%:latest
                     """
                 }
+            }
+        }
+        stage('run container'){
+            steps{
+                bat"""
+                docker compose down
+                docker compose pull
+                docker compose up -d
+                docker ps
+
+                
+                """
             }
         }
         
