@@ -32,6 +32,22 @@ pipeline {
                 '''
             }
         }
+        stage('Tests') {
+            parallel {
+                stage('Unit tests') {
+                    steps {
+                        echo 'Running unit tests'
+                    }
+                }
+
+                stage('Integration tests') {
+                    steps {
+                        echo 'Running integration tests'
+                    }
+                }
+            }
+        }
+
 
         stage('push sur dockerhub') {
             steps {
