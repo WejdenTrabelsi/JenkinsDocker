@@ -34,7 +34,7 @@ pipeline {
         }
         stage('push sur dockerhub') {
             steps {
-                withCredentials([usernamePassword(credentialsId:'dockerhub-creds', usernameVariable:'USER', passwordVariable:'PASS')]) {
+                withCredentials([usernamePassword(credentialsId:'docker-id', usernameVariable:'USER', passwordVariable:'PASS')]) {
                     bat """
                     echo %PASS% | docker login -u %USER% --password-stdin
                     docker tag %IMAGE%:%TAG% %IMAGE%:latest
