@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+     agent {
+        any {
+            
+            customWorkspace 'D:\\Jenkins\\workspace\\dockerjenkins2'
+        }
+    }
     environment {
         IMAGE = 'wejdentrabelsi9/dockerjenkins2'
         TAG = "build-${env.BUILD_NUMBER}"
